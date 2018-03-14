@@ -1,12 +1,12 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
-const config = require('./build/config');
+const config = require('./config');
 
 module.exports = {
     entry: [
         // index文件的入口，一般来说，入口只会处理js
-        path.resolve(__dirname, './src/index.js')
+        path.resolve(__dirname, './src/index.jsx')
     ],
     output: {
         // 打包的路径
@@ -19,20 +19,20 @@ module.exports = {
             exclude: /node_modules/,
             use: {
                 loader: "babel-loader",
-                options: {
-                    presets: [
-                        "es2015",
-                        "react"
-                    ],
-                    plugins: [
-                        // 转换的核心插件，去除冗余代码
-                        "transform-runtime",
-                        // 如果babel中用到了import，需要引入这个
-                        "syntax-dynamic-import"
-                    ]
-                }
+                // 配置放在.babelrc中
+            }
+        }, {
+            test: /(\.jsx|\.js)$/,
+            exclude: /node_modules/,
+            use: {
+                loader: "eslint-loader",
+                // 配置放在.eslintrc.js中
             }
         }]
+    },
+    // 需要在模块导入时进行自己的别名转换，否则jsx可能无法导出
+    resolve: {
+        extensions: ['*', '.js', '.jsx'],
     },
     plugins: [
         // 自动基于模板，生成最终引入了脚本后的页面
