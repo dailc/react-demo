@@ -11,7 +11,7 @@ module.exports = {
         'ecmaFeatures': {
             // 允许在全局作用域下使用 return 语句
             "globalReturn": true,
-            "jsx": false
+            "jsx": true
         }
     },
     'env': {
@@ -25,6 +25,11 @@ module.exports = {
         "dd": true,
         "ejs": true,
     },
+    "plugins": [
+        "react",
+        "jsx-a11y",
+        "import"
+    ],
     // add your custom rules here
     'rules': {
         // 关闭react拓展
@@ -51,7 +56,7 @@ module.exports = {
         // 允许一个变量或多个变量的声明
         //'one-var': 0,
         // 允许++和--
-        'no-plusplus': 0,        
+        'no-plusplus': 0,
         // 文件末尾强制换行，目前暂时放弃，考虑到一些Idle的格式化问题
         'eol-last': 0,
         //强制使用一致的缩进，4个空格
@@ -68,11 +73,20 @@ module.exports = {
         // 以下是一些与airbnb无关的修改配置
         // recommend的修改
         // 花括号换行的一致性
-        "object-curly-newline": [2, {
-            "ObjectExpression": "always",
-            "ObjectPattern": { "multiline": true },
-            "ImportDeclaration": "always",
-            "ExportDeclaration": { "multiline": true, "minProperties": 3 }
+        // 关闭这个规则
+        "object-curly-newline": [0, {
+            "ObjectExpression": {
+                "multiline": true,
+            },
+            "ObjectPattern": {
+                "multiline": true,
+            },
+            "ImportDeclaration": {
+                "multiline": true,
+            },
+            "ExportDeclaration": {
+                "multiline": true,
+            }
         }],
         //  禁用行尾空格,允许空行使用空白符
         'no-trailing-spaces': [2, {
@@ -92,7 +106,7 @@ module.exports = {
         //'arrow-parens': 2,
         // allow debugger during development
         'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-        
+
         // react相关
         // jsx语法之间的单词indent，采用4个空格
         "react/jsx-indent": [2,
@@ -103,7 +117,10 @@ module.exports = {
         ],
         // 关闭纯函数使用的限制
         "react/prefer-stateless-function": 0,
+        // 关闭a标签的验证
+        "jsx-a11y/anchor-is-valid": 0,
         "jsx-a11y/click-events-have-key-events": 0,
-        "react/prop-types": 0
+        "react/prop-types": 0,
+        "jsx-a11y/no-static-element-interactions": 0
     }
 }
